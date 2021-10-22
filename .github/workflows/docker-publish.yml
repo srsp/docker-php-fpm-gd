@@ -1,16 +1,17 @@
-name: Docker publish
+name: Docker Publish
 
 
 on:
   push:
     # branches: [ main ]
     # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
+    tags: [ '*.*.*' ]
 
 env:
   # REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: php-fpm-gd
+  REGISTRY_USER: srsp
 
 
 jobs:
@@ -32,7 +33,7 @@ jobs:
         uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
+          username: ${{ env.REGISTRY_USER }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       # Extract metadata (tags, labels) for Docker
@@ -50,5 +51,7 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          tags: |
+            ${{ env.REGISTRY_USER }}/${{ env.IMAGE_NAME }}:${{ env.RELEASE_VERSION }}
+          
