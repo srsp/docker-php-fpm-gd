@@ -9,7 +9,6 @@ on:
 
 env:
   # REGISTRY: ghcr.io
-  REGISTRY: hub.docker.com
   # github.repository as <account>/<repo>
   IMAGE_NAME: php-fpm-gd
 
