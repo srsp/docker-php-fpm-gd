@@ -1,4 +1,4 @@
-FROM php:8.3.0-fpm
+FROM php:8.3.2-fpm
 # Install PHP GD
 RUN apt-get update && apt-get install -y \
 		libfreetype6-dev \
